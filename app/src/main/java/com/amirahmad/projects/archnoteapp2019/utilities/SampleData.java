@@ -1,6 +1,7 @@
 package com.amirahmad.projects.archnoteapp2019.utilities;
 
-import com.example.plainolnotes3.model.NoteEntity;
+
+import com.amirahmad.projects.archnoteapp2019.model.NoteEntity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
