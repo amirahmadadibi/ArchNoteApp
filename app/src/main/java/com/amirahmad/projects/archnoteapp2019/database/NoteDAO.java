@@ -32,7 +32,7 @@ public interface NoteDAO {
     NoteEntity getNoteById(int id);
 
     @Query("select * from notes order by date desc")
-    LiveData<NoteEntity> getAllNotes();
+    LiveData<List<NoteEntity>> getAllNotes();
 
     @Query("delete from notes")
     int deleteAll();

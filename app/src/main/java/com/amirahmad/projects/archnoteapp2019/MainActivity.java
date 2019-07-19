@@ -2,6 +2,7 @@ package com.amirahmad.projects.archnoteapp2019;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,24 +26,33 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerViewNotes;
     NotesAdapter notesAdapter;
     List<NoteEntity> noteEntityList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mainViewModel  = ViewModelProviders.of(this).get(MainViewModel.class);
         initViews();
+
 
     }
 
     private void initViews() {
-        toolbarNotes = findViewById(R.id.toolbarNotes);
         recyclerViewNotes = findViewById(R.id.recyclerViewNotes);
+        mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        toolbarNotes = findViewById(R.id.toolbarNotes);
         setSupportActionBar(toolbarNotes);
-        noteEntityList = mainViewModel.noteEntityList;
-        recyclerViewNotes.setHasFixedSize(true);
         notesAdapter = new NotesAdapter(noteEntityList);
         recyclerViewNotes.setAdapter(notesAdapter);
         recyclerViewNotes.setLayoutManager(new LinearLayoutManager(this));
+
+
+        final Observer<List<NoteEntity>> notesObserver = noteEntities -> {
+            noteEntityList.clear();
+            noteEntityList.addAll(noteEntities);
+            notesAdapter.notifyDataSetChanged();
+        };
+
+        mainViewModel.noteEntityList.observe(this, notesObserver);
     }
 
     @Override
@@ -55,17 +65,23 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.actionAddItem:
-                noteEntityList.addAll(SampleData.getNotes());
-                notesAdapter.notifyDataSetChanged();
+                addSampleData();
                 break;
             case R.id.actionRemoveAllItems:
-                noteEntityList.removeAll(noteEntityList);
-                notesAdapter.notifyDataSetChanged();
+               deleteAllNotes();
                 break;
             default:
                 Toast.makeText(this, "Wrong", Toast.LENGTH_SHORT).show();
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteAllNotes() {
+        mainViewModel.deleteAllNotes();
+    }
+
+    private void addSampleData() {
+        mainViewModel.addSampleData();
     }
 }
