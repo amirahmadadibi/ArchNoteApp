@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         toolbarNotes = findViewById(R.id.toolbarNotes);
         recyclerViewNotes = findViewById(R.id.recyclerViewNotes);
         setSupportActionBar(toolbarNotes);
-        noteEntityList = SampleData.getNotes();
+        noteEntityList = mainViewModel.noteEntityList;
         recyclerViewNotes.setHasFixedSize(true);
         notesAdapter = new NotesAdapter(noteEntityList);
         recyclerViewNotes.setAdapter(notesAdapter);
