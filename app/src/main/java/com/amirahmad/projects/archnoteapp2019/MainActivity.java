@@ -10,12 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.amirahmad.projects.archnoteapp2019.model.NoteEntity;
 import com.amirahmad.projects.archnoteapp2019.ui.NotesAdapter;
-import com.amirahmad.projects.archnoteapp2019.utilities.SampleData;
 import com.amirahmad.projects.archnoteapp2019.viewmodel.MainViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initViews();
 
+        FloatingActionButton floatingActionButton = findViewById(R.id.fabButtonAddNewNote);
+        floatingActionButton.setOnClickListener(v -> {
 
+        });
     }
 
     private void initViews() {
